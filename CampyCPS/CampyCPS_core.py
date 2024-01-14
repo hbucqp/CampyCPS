@@ -81,7 +81,6 @@ class campycps():
                         result[gene] = f'~{num}'
                     else:
                         next
-                    # result[sch] = mlst
                 elif (alen != hlen) & (nident == hlen):  # partial match
                     # print('xxxx')
                     if gene not in result.keys():
