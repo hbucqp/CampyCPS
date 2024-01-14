@@ -5,7 +5,7 @@
 # File Name: setup.py
 # Author: Jake Cui
 # Mail: cqp@cau.edu.cn
-# Created Time:  2022-11-16 14:49:41
+# Created Time:  2024-1-10 14:49:41
 #############################################
 
 import os
@@ -40,7 +40,7 @@ def get_version(rel_path: str) -> str:
 
 about = {}
 here = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(here, 'cvmcgmlst', '__init__.py'), 'r', encoding='utf-8') as f:
+with open(os.path.join(here, 'CampyCPS', '__init__.py'), 'r', encoding='utf-8') as f:
     exec(f.read(), about)
 
 
@@ -50,14 +50,14 @@ with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
 
 
 setup(
-    name="cvmcgmlst",
+    name="CampyCPS",
     version=about['__version__'],
-    keywords=["wgs", "cgmlst"],
-    description="cgMLST analysis tool",
+    keywords=["wgs", "Campylobacter CPS"],
+    description="Campylobacter CPS relevant gene analysis tool",
     long_description=long_description,
     long_description_content_type='text/markdown',
     license="MIT Licence",
-    url="https://github.com/hbucqp/cvmcgmlst",
+    url="https://github.com/hbucqp/CampyCPS",
     author=about['__author__'],
     author_email=about['__author_email__'],
     packages=find_packages(),
@@ -73,15 +73,14 @@ setup(
         'Topic :: Software Development :: Build Tools',
         'License :: OSI Approved :: MIT License',   # Again, pick a license
         # Specify which pyhton versions that you want to support
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
     ],
     entry_points={
         'console_scripts': [
-            'cvmcgmlst=cvmcgmlst.cvmcgmlst:main',
+            'CampyCPS=CampyCPS.CampyCPS:main',
         ],
     },
 )
