@@ -52,8 +52,9 @@ conda install -c bioconda blast
 
 The first time when running CampyCPS, you should use **CampyCPS -init** command to initialize your database.
 
-### CPS relevant genes
+**The default database including the following genes.**
 
+### CPS relevant genes
 | Loci     | Gene/Aliases   | Full name/product                                                           |
 |----------|----------------|-----------------------------------------------------------------------------|
 | CAMP1067 | waaF           | Heptosyltransferase II (K02843)                                             |
