@@ -68,6 +68,14 @@ def main():
     database_path = os.path.join(os.path.dirname(__file__), os.path.join(
         os.path.abspath(os.path.dirname(__file__)), 'db/CampyCPS.fa'))
 
+    # Read the CPS_scheme and create column name dict "CAMP1067:CAMP1067(waaF)""
+    scheme_file = os.path.join(os.path.dirname(__file__), os.path.join(
+        os.path.abspath(os.path.dirname(__file__)), 'db/CPS_scheme.xlsx'))
+    excel = pd.ExcelFile(scheme_file)
+    df_scheme = excel.parse()
+    col_replace_dict = dict(
+        zip(df_scheme['Loci'], df_scheme['Loci'] + '(' + df_scheme['Gene/Aliases'] + ')'))
+
     if args.init:
         print('Initailizing Campylobacter CPS database ...')
         initialize_db(database_path)
@@ -86,8 +94,6 @@ def main():
             os.mkdir(args.o)
         output_path = os.path.abspath(args.o)
         # print(output_path)
-
-
 
         files = []
 
@@ -127,7 +133,7 @@ def main():
                             df_trans.index = [file_base]
 
                             # df_out['FILE'] = file_base
-                            # order = list(reversed(df.columns.to_list()))
+                            # ordmlster = list(reversed(df.columns.to_list()))
                             # df = df[order]
                             # print(df)
                             df.to_csv(outfile, sep='\t', index=True)
@@ -147,6 +153,7 @@ def main():
         # output final pivot dataframe to outpu_path
         summary_file = os.path.join(output_path, 'CampyCPS_summary.csv')
         df_all.index.name = 'Strain'
+        df_all.rename(columns=col_replace_dict, inplace=True)
         df_all.to_csv(summary_file, index=True)
 
 
