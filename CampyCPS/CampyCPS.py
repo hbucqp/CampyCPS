@@ -9,6 +9,7 @@ import subprocess
 import pandas as pd
 from Bio import SeqIO
 from .CampyCPS_core import campycps
+from .CampyCPS_core import BlastDbError
 
 
 def args_parse():
@@ -70,9 +71,9 @@ def main():
 
     # Read the CPS_scheme and create column name dict "CAMP1067:CAMP1067(waaF)""
     scheme_file = os.path.join(os.path.dirname(__file__), os.path.join(
-        os.path.abspath(os.path.dirname(__file__)), 'db/CPS_scheme.xlsx'))
-    excel = pd.ExcelFile(scheme_file)
-    df_scheme = excel.parse()
+        os.path.abspath(os.path.dirname(__file__)), 'db/CPS_scheme.csv'))
+    df_scheme = pd.read_csv(scheme_file)
+    # df_scheme = excel.parse()
     col_replace_dict = dict(
         zip(df_scheme['Loci'], df_scheme['Loci'] + '(' + df_scheme['Gene/Aliases'] + ')'))
 
@@ -122,8 +123,14 @@ def main():
                     # print("TRUE")
                     if campycps.is_fasta(file_path):
                         print(f'Processing {file}')
-                        result = campycps(file_path, database_path, output_path,
-                                          threads, minid, mincov).biopython_blast()
+                        try:
+                            result = campycps(
+                                file_path, database_path, output_path, threads, minid, mincov).biopython_blast()
+                        except:
+                            raise(BlastDbError(
+                                "Please run CampyCPS -init to initialize the reference database!"))
+                            sys.exit(0)
+
                         # print(df)
                         if len(result) != 0:
                             df = pd.DataFrame.from_dict(result, orient='index')

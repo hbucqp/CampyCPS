@@ -15,6 +15,10 @@ from Bio.Blast.Applications import NcbiblastnCommandline
 from Bio.Blast.Applications import NcbimakeblastdbCommandline
 
 
+class BlastDbError(Exception):
+    pass
+
+
 class campycps():
     def __init__(self, inputfile, database, output, threads, minid=95, mincov=90):
         self.inputfile = os.path.abspath(inputfile)
